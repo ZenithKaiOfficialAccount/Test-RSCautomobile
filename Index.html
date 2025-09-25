@@ -5,6 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RSCAutomobile - Die beste Auto-Website weltweit</title>
     <style>
+        /* Auswahl Screen */
+        .format-selector {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .format-selector h2 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .format-options {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .format-btn {
+            padding: 20px 40px;
+            font-size: 1.2rem;
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .format-btn:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-5px);
+        }
+        
+        /* Verstecke den Auswahlbildschirm */
+        .format-selector.hidden {
+            display: none;
+        }
+
         /* Globale Stile */
         * {
             margin: 0;
@@ -28,8 +81,8 @@
             padding: 0 15px;
         }
         
-        /* Header */
-        header {
+        /* Header - PC Version */
+        .pc-version header {
             background-color: #000;
             padding: 15px 0;
             position: fixed;
@@ -39,41 +92,41 @@
             transition: all 0.4s ease;
         }
         
-        .header-content {
+        .pc-version .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        .logo {
+        .pc-version .logo {
             font-size: 24px;
             font-weight: bold;
             color: #fff;
             animation: subtleGlow 3s ease-in-out infinite alternate;
         }
         
-        .logo span {
+        .pc-version .logo span {
             color: #ffffff;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
         
-        nav ul {
+        .pc-version nav ul {
             display: flex;
             list-style: none;
             gap: 20px;
         }
         
-        nav ul li {
+        .pc-version nav ul li {
             animation: fadeInDown 0.8s ease-out;
         }
         
-        nav ul li:nth-child(1) { animation-delay: 0.1s; }
-        nav ul li:nth-child(2) { animation-delay: 0.2s; }
-        nav ul li:nth-child(3) { animation-delay: 0.3s; }
-        nav ul li:nth-child(4) { animation-delay: 0.4s; }
-        nav ul li:nth-child(5) { animation-delay: 0.5s; }
+        .pc-version nav ul li:nth-child(1) { animation-delay: 0.1s; }
+        .pc-version nav ul li:nth-child(2) { animation-delay: 0.2s; }
+        .pc-version nav ul li:nth-child(3) { animation-delay: 0.3s; }
+        .pc-version nav ul li:nth-child(4) { animation-delay: 0.4s; }
+        .pc-version nav ul li:nth-child(5) { animation-delay: 0.5s; }
         
-        nav ul li a {
+        .pc-version nav ul li a {
             color: #fff;
             text-decoration: none;
             font-size: 16px;
@@ -83,13 +136,13 @@
             white-space: nowrap;
         }
         
-        nav ul li a:hover {
+        .pc-version nav ul li a:hover {
             color: #ffffff;
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
             transform: translateY(-2px);
         }
         
-        nav ul li a::after {
+        .pc-version nav ul li a::after {
             content: '';
             position: absolute;
             width: 0;
@@ -101,11 +154,104 @@
             transition: width 0.3s ease;
         }
         
-        nav ul li a:hover::after {
+        .pc-version nav ul li a:hover::after {
             width: 100%;
         }
         
-        /* Hero Bereich */
+        /* Header - Mobile Version */
+        .mobile-version header {
+            background-color: #000;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+            transition: all 0.4s ease;
+        }
+        
+        .mobile-version .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mobile-version .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            animation: subtleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        .mobile-version .menu-toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-version .menu-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        .mobile-version .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            height: 100%;
+            background: #000;
+            border-left: 1px solid #333;
+            transition: right 0.3s ease;
+            z-index: 1001;
+            padding: 80px 30px 30px 30px;
+        }
+        
+        .mobile-version .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-version .mobile-menu ul {
+            list-style: none;
+        }
+        
+        .mobile-version .mobile-menu ul li {
+            margin-bottom: 20px;
+        }
+        
+        .mobile-version .mobile-menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-version .mobile-menu ul li a:hover {
+            color: #ffffff;
+            padding-left: 20px;
+        }
+        
+        .mobile-version .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .mobile-version .menu-overlay.active {
+            display: block;
+        }
+        
+        /* Gemeinsame Stile für beide Versionen */
         .hero {
             height: 100vh;
             min-height: 600px;
@@ -686,34 +832,43 @@
             transform: translateY(0);
         }
         
-        /* Responsive Design - Optimiert für Mobile */
+        /* Verstecke die nicht ausgewählte Version */
+        .pc-version, .mobile-version {
+            display: none;
+        }
+        
+        .pc-version.active, .mobile-version.active {
+            display: block;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
             .container {
                 width: 95%;
                 padding: 0 10px;
             }
             
-            .header-content {
+            .pc-version .header-content {
                 flex-direction: row;
                 justify-content: space-between;
             }
             
-            .logo {
+            .pc-version .logo {
                 font-size: 20px;
             }
             
-            nav ul {
+            .pc-version nav ul {
                 margin-top: 0;
                 flex-wrap: nowrap;
                 justify-content: flex-end;
                 gap: 12px;
             }
             
-            nav ul li {
+            .pc-version nav ul li {
                 margin: 0;
             }
             
-            nav ul li a {
+            .pc-version nav ul li a {
                 font-size: 14px;
                 padding: 5px 0;
             }
@@ -802,287 +957,501 @@
                 padding: 12px;
             }
         }
-        
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 18px;
-            }
-            
-            nav ul {
-                gap: 8px;
-            }
-            
-            nav ul li a {
-                font-size: 12px;
-            }
-            
-            .hero-content h1 {
-                font-size: 1.6rem;
-            }
-            
-            .offer-banner {
-                padding: 15px;
-            }
-            
-            .offer-banner .price {
-                font-size: 1.8rem;
-            }
-        }
-        
-        /* Spezielle Optimierungen für sehr kleine Displays */
-        @media (max-width: 360px) {
-            .header-content {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            nav ul {
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            
-            .hero {
-                min-height: 800px;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">RSC<span>Automobile</span></div>
-                <nav>
-                    <ul>
-                        <li><a href="#home">Startseite</a></li>
-                        <li><a href="#models">Modelle</a></li>
-                        <li><a href="#service">Service</a></li>
-                        <li><a href="#about">Über uns</a></li>
-                        <li><a href="#contact">Kontakt</a></li>
-                    </ul>
-                </nav>
-            </div>
+    <!-- Auswahlbildschirm -->
+    <div class="format-selector" id="formatSelector">
+        <h2>Wählen Sie Ihr Format</h2>
+        <div class="format-options">
+            <button class="format-btn" onclick="selectFormat('pc')">PC Format</button>
+            <button class="format-btn" onclick="selectFormat('mobile')">Handy Format</button>
         </div>
-    </header>
+    </div>
 
-    <!-- Hero Bereich -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <h1>DIE BESTEN FAHRZEUGE – ALLES AN EINEM ORT</h1>
-                <p>„Entdecken Sie eine exklusive Auswahl an Premium-Modellen führender Hersteller. Bei uns finden Sie das Fahrzeug, das perfekt zu Ihnen passt – kombiniert mit individueller Beratung und einem Service, auf den Sie sich verlassen können."</p>
-                
-                <!-- Angebot Banner -->
-                <div class="offer-banner fade-in">
-                    <h3>SPECIAL OFFER</h3>
-                    <div class="price">50 €</div>
-                    <p>Reifen aufziehen inklusive Wuchten und Montage</p>
-                    <div class="period">Vom 01.10.2025 bis 01.12.2025</div>
-                    <div class="details">Nur für eine begrenzte Zeit - Jetzt Termin vereinbaren!</div>
-                </div>
-                
-                <a href="#contact" class="btn">Jetzt Termin vereinbaren</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modelle Bereich -->
-    <section class="models" id="models">
-        <div class="container">
-            <h2 class="section-title">Unsere <span>Modelle</span></h2>
-            <div class="models-grid">
-                <div class="model-card fade-in">
-                    <div class="model-img" style="background-image: url('https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
-                    <div class="model-info">
-                        <h3>Modell 1</h3>
-                        <p class="coming-soon">Bald Verfügbar</p>
-                        <p>Details zu diesem Modell werden in Kürze veröffentlicht.</p>
-                        <a href="#" class="btn btn-disabled">Mehr erfahren</a>
-                    </div>
-                </div>
-                <div class="model-card fade-in">
-                    <div class="model-img" style="background-image: url('https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
-                    <div class="model-info">
-                        <h3>Modell 2</h3>
-                        <p class="coming-soon">Bald Verfügbar</p>
-                        <p>Details zu diesem Modell werden in Kürze veröffentlicht.</p>
-                        <a href="#" class="btn btn-disabled">Mehr erfahren</a>
-                    </div>
-                </div>
-                <div class="model-card fade-in">
-                    <div class="model-img" style="background-image: url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
-                    <div class="model-info">
-                        <h3>Modell 3</h3>
-                        <p class="coming-soon">Bald Verfügbar</p>
-                        <p>Details zu diesem Modell werden in Kürze veröffentlicht.</p>
-                        <a href="#" class="btn btn-disabled">Mehr erfahren</a>
-                    </div>
+    <!-- PC Version -->
+    <div class="pc-version" id="pcVersion">
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">RSC<span>Automobile</span></div>
+                    <nav>
+                        <ul>
+                            <li><a href="#home">Startseite</a></li>
+                            <li><a href="#models">Modelle</a></li>
+                            <li><a href="#service">Service</a></li>
+                            <li><a href="#about">Über uns</a></li>
+                            <li><a href="#contact">Kontakt</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <!-- Service Bereich -->
-    <section class="service" id="service">
-        <div class="container">
-            <h2 class="section-title">Unser <span>Service</span></h2>
-            <div class="service-content fade-in">
-                <div class="service-text">
-                    <h2>Unser Service</h2>
-                    <p><strong>Reifenservice & - Wechsel</strong><br>
-                    Professioneller Reifenservice und schneller Reifenwechsel für alle Fahrzeugtypen.</p>
+        <!-- Rest der PC Website... -->
+        <!-- Hero Bereich -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>DIE BESTEN FAHRZEUGE – ALLES AN EINEM ORT</h1>
+                    <p>„Entdecken Sie eine exklusive Auswahl an Premium-Modellen führender Hersteller. Bei uns finden Sie das Fahrzeug, das perfekt zu Ihnen passt – kombiniert mit individueller Beratung und einem Service, auf den Sie sich verlassen können."</p>
                     
-                    <p><strong>Professionelle Innenaufbereitung</strong><br>
-                    Gründliche Reinigung und Pflege Ihres Fahrzeuginnenraums für ein neuwertiges Gefühl.</p>
-                    
-                    <p><strong>An- & Verkauf von Reifen & Felgen</strong><br>
-                    Große Auswahl an Reifen und Felgen – sowohl Neu- als auch Gebrauchtware.</p>
-                    
-                    <p><strong>Lieferung des Fahrzeuges nach Hause - schnell & zuverlässig</strong><br>
-                    Bequemer Lieferservice direkt zu Ihnen nach Hause oder an den Wunschort.</p>
-                    
-                    <a href="#" class="btn">Serviceangebote entdecken</a>
-                </div>
-                <div class="service-image"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Über uns Bereich -->
-    <section class="about" id="about">
-        <div class="container">
-            <h2 class="section-title">Über <span>uns</span></h2>
-            <div class="about-content fade-in">
-                <div class="about-image"></div>
-                <div class="about-text">
-                    <h2>Leidenschaft für Automobile</h2>
-                    <p>Seit über 50 Jahren stehen wir für herausragende Qualität, innovative Technologien und einzigartiges Design.</p>
-                    <p>Unsere Mission ist es, Fahrzeuge zu schaffen, die nicht nur Fortbewegungsmittel sind, sondern Emotionen wecken und bleibende Eindrücke hinterlassen.</p>
-                    <a href="#" class="btn">Geschichte entdecken</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Kontakt Bereich -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2 class="section-title">Kontaktieren Sie <span>uns</span></h2>
-            <div class="contact-form">
-                <form>
-                    <div class="form-group fade-in">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" required>
+                    <!-- Angebot Banner -->
+                    <div class="offer-banner fade-in">
+                        <h3>SPECIAL OFFER</h3>
+                        <div class="price">50 €</div>
+                        <p>Reifen aufziehen inklusive Wuchten und Montage</p>
+                        <div class="period">Vom 01.10.2025 bis 01.12.2025</div>
+                        <div class="details">Nur für eine begrenzte Zeit - Jetzt Termin vereinbaren!</div>
                     </div>
-                    <div class="form-group fade-in">
-                        <label for="email">E-Mail</label>
-                        <input type="email" id="email" required>
-                    </div>
-                    <div class="form-group fade-in">
-                        <label for="message">Nachricht</label>
-                        <textarea id="message" required></textarea>
-                    </div>
-                    <button type="submit" class="btn">Nachricht senden</button>
-                </form>
+                    
+                    <a href="#contact" class="btn">Jetzt Termin vereinbaren</a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section fade-in">
-                    <h3>RSCAutomobile</h3>
-                    <p>Die beste Auto-Website weltweit. Wir bieten Premium-Fahrzeuge mit innovativer Technologie und herausragendem Design.</p>
-                </div>
-                <div class="footer-section fade-in">
-                    <h3>Kontakt</h3>
-                    <p>Musterstraße 123<br>12345 Musterstadt<br>Deutschland</p>
-                    <p>Tel: +49 123 456789<br>Email: info@rscautomobile.de</p>
-                </div>
-                <div class="footer-section fade-in">
-                    <h3>Links</h3>
-                    <p><a href="#home">Startseite</a></p>
-                    <p><a href="#models">Modelle</a></p>
-                    <p><a href="#service">Service</a></p>
-                    <p><a href="#about">Über uns</a></p>
-                    <p><a href="#contact">Kontakt</a></p>
+        <!-- Modelle Bereich -->
+        <section class="models" id="models">
+            <div class="container">
+                <h2 class="section-title">Unsere <span>Modelle</span></h2>
+                <div class="models-grid">
+                    <div class="model-card fade-in">
+                        <div class="model-img" style="background-image: url('https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
+                        <div class="model-info">
+                            <h3>Modell 1</h3>
+                            <p class="coming-soon">Bald Verfügbar</p>
+                            <p>Details zu diesem Modell werden in Kürze veröffentlicht.</p>
+                            <a href="#" class="btn btn-disabled">Mehr erfahren</a>
+                        </div>
+                    </div>
+                    <div class="model-card fade-in">
+                        <div class="model-img" style="background-image: url('https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
+                        <div class="model-info">
+                            <h3>Modell 2</h3>
+                            <p class="coming-soon">Bald Verfügbar</p>
+                            <p>Details zu diesem Modell werden in Kürze veröffentlicht.</p>
+                            <a href="#" class="btn btn-disabled">Mehr erfahren</a>
+                        </div>
+                    </div>
+                    <div class="model-card fade-in">
+                        <div class="model-img" style="background-image: url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
+                        <div class="model-info">
+                            <h3>Modell 3</h3>
+                            <p class="coming-soon">Bald Verfügbar</p>
+                            <p>Details zu diesem Modell werden in Kürze veröffentlicht.</p>
+                            <a href="#" class="btn btn-disabled">Mehr erfahren</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2023 RSCAutomobile. Alle Rechte vorbehalten.</p>
+        </section>
+
+        <!-- Service Bereich -->
+        <section class="service" id="service">
+            <div class="container">
+                <h2 class="section-title">Unser <span>Service</span></h2>
+                <div class="service-content fade-in">
+                    <div class="service-text">
+                        <h2>Unser Service</h2>
+                        <p><strong>Reifenservice & - Wechsel</strong><br>
+                        Professioneller Reifenservice und schneller Reifenwechsel für alle Fahrzeugtypen.</p>
+                        
+                        <p><strong>Professionelle Innenaufbereitung</strong><br>
+                        Gründliche Reinigung und Pflege Ihres Fahrzeuginnenraums für ein neuwertiges Gefühl.</p>
+                        
+                        <p><strong>An- & Verkauf von Reifen & Felgen</strong><br>
+                        Große Auswahl an Reifen und Felgen – sowohl Neu- als auch Gebrauchtware.</p>
+                        
+                        <p><strong>Lieferung des Fahrzeuges nach Hause - schnell & zuverlässig</strong><br>
+                        Bequemer Lieferservice direkt zu Ihnen nach Hause oder an den Wunschort.</p>
+                        
+                        <a href="#" class="btn">Serviceangebote entdecken</a>
+                    </div>
+                    <div class="service-image"></div>
+                </div>
             </div>
+        </section>
+
+        <!-- Über uns Bereich -->
+        <section class="about" id="about">
+            <div class="container">
+                <h2 class="section-title">Über <span>uns</span></h2>
+                <div class="about-content fade-in">
+                    <div class="about-image"></div>
+                    <div class="about-text">
+                        <h2>Leidenschaft für Automobile</h2>
+                        <p>Seit über 50 Jahren stehen wir für herausragende Qualität, innovative Technologien und einzigartiges Design.</p>
+                        <p>Unsere Mission ist es, Fahrzeuge zu schaffen, die nicht nur Fortbewegungsmittel sind, sondern Emotionen wecken und bleibende Eindrücke hinterlassen.</p>
+                        <a href="#" class="btn">Geschichte entdecken</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kontakt Bereich -->
+        <section class="contact" id="contact">
+            <div class="container">
+                <h2 class="section-title">Kontaktieren Sie <span>uns</span></h2>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group fade-in">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group fade-in">
+                            <label for="email">E-Mail</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group fade-in">
+                            <label for="message">Nachricht</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Nachricht senden</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section fade-in">
+                        <h3>RSCAutomobile</h3>
+                        <p>Die beste Auto-Website weltweit. Wir bieten Premium-Fahrzeuge mit innovativer Technologie und herausragendem Design.</p>
+                    </div>
+                    <div class="footer-section fade-in">
+                        <h3>Kontakt</h3>
+                        <p>Musterstraße 123<br>12345 Musterstadt<br>Deutschland</p>
+                        <p>Tel: +49 123 456789<br>Email: info@rscautomobile.de</p>
+                    </div>
+                    <div class="footer-section fade-in">
+                        <h3>Links</h3>
+                        <p><a href="#home">Startseite</a></p>
+                        <p><a href="#models">Modelle</a></p>
+                        <p><a href="#service">Service</a></p>
+                        <p><a href="#about">Über uns</a></p>
+                        <p><a href="#contact">Kontakt</a></p>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2023 RSCAutomobile. Alle Rechte vorbehalten.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Mobile Version -->
+    <div class="mobile-version" id="mobileVersion">
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">RSC<span>Automobile</span></div>
+                    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Menu -->
+        <div class="menu-overlay" onclick="toggleMobileMenu()"></div>
+        <div class="mobile-menu">
+            <ul>
+                <li><a href="#home" onclick="toggleMobileMenu()">Startseite</a></li>
+                <li><a href="#models" onclick="toggleMobileMenu()">Modelle</a></li>
+                <li><a href="#service" onclick="toggleMobileMenu()">Service</a></li>
+                <li><a href="#about" onclick="toggleMobileMenu()">Über uns</a></li>
+                <li><a href="#contact" onclick="toggleMobileMenu()">Kontakt</a></li>
+            </ul>
         </div>
-    </footer>
+
+        <!-- Rest der Mobile Website (identisch mit PC Version, aber mit mobilem Header) -->
+        <!-- Hero Bereich -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>DIE BESTEN FAHRZEUGE – ALLES AN EINEM ORT</h1>
+                    <p>„Entdecken Sie eine exklusive Auswahl an Premium-Modellen führender Hersteller. Bei uns finden Sie das Fahrzeug, das perfekt zu Ihnen passt – kombiniert mit individueller Beratung und einem Service, auf den Sie sich verlassen können."</p>
+                    
+                    <!-- Angebot Banner -->
+                    <div class="offer-banner fade-in">
+                        <h3>SPECIAL OFFER</h3>
+                        <div class="price">50 €</div>
+                        <p>Reifen aufziehen inklusive Wuchten und Montage</p>
+                        <div class="period">Vom 01.10.2025 bis 01.12.2025</div>
+                        <div class="details">Nur für eine begrenzte Zeit - Jetzt Termin vereinbaren!</div>
+                    </div>
+                    
+                    <a href="#contact" class="btn">Jetzt Termin vereinbaren</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modelle Bereich -->
+        <section class="models" id="models">
+            <div class="container">
+                <h2 class="section-title">Unsere <span>Modelle</span></h2>
+                <div class="models-grid">
+                    <div class="model-card fade-in">
+                        <div class="model-img" style="background-image: url('https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
+                        <div class="model-info">
+                            <h3>Modell 1</h3>
+                            <p class="coming-soon">Bald Verfügbar</p>
+                            <p>Details zu diesem Modell werden in Kürze veröffentlicht.</p>
+                            <a href="#" class="btn btn-disabled">Mehr erfahren</a>
+                        </div>
+                    </div>
+                    <div class="model-card fade-in">
+                        <div class="model-img" style="background-image: url('https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
+                        <div class="model-info">
+                            <h3>Modell 2</h3>
+                            <p class="coming-soon">Bald Verfügbar</p>
+                            <p>Details zu diesem Modell werden in Kürze veröffentlicht.</p>
+                            <a href="#" class="btn btn-disabled">Mehr erfahren</a>
+                        </div>
+                    </div>
+                    <div class="model-card fade-in">
+                        <div class="model-img" style="background-image: url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
+                        <div class="model-info">
+                            <h3>Modell 3</h3>
+                            <p class="coming-soon">Bald Verfügbar</p>
+                            <p>Details zu diesem Modell werden in Kürze veröffentlicht.</p>
+                            <a href="#" class="btn btn-disabled">Mehr erfahren</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Service Bereich -->
+        <section class="service" id="service">
+            <div class="container">
+                <h2 class="section-title">Unser <span>Service</span></h2>
+                <div class="service-content fade-in">
+                    <div class="service-text">
+                        <h2>Unser Service</h2>
+                        <p><strong>Reifenservice & - Wechsel</strong><br>
+                        Professioneller Reifenservice und schneller Reifenwechsel für alle Fahrzeugtypen.</p>
+                        
+                        <p><strong>Professionelle Innenaufbereitung</strong><br>
+                        Gründliche Reinigung und Pflege Ihres Fahrzeuginnenraums für ein neuwertiges Gefühl.</p>
+                        
+                        <p><strong>An- & Verkauf von Reifen & Felgen</strong><br>
+                        Große Auswahl an Reifen und Felgen – sowohl Neu- als auch Gebrauchtware.</p>
+                        
+                        <p><strong>Lieferung des Fahrzeuges nach Hause - schnell & zuverlässig</strong><br>
+                        Bequemer Lieferservice direkt zu Ihnen nach Hause oder an den Wunschort.</p>
+                        
+                        <a href="#" class="btn">Serviceangebote entdecken</a>
+                    </div>
+                    <div class="service-image"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Über uns Bereich -->
+        <section class="about" id="about">
+            <div class="container">
+                <h2 class="section-title">Über <span>uns</span></h2>
+                <div class="about-content fade-in">
+                    <div class="about-image"></div>
+                    <div class="about-text">
+                        <h2>Leidenschaft für Automobile</h2>
+                        <p>Seit über 50 Jahren stehen wir für herausragende Qualität, innovative Technologien und einzigartiges Design.</p>
+                        <p>Unsere Mission ist es, Fahrzeuge zu schaffen, die nicht nur Fortbewegungsmittel sind, sondern Emotionen wecken und bleibende Eindrücke hinterlassen.</p>
+                        <a href="#" class="btn">Geschichte entdecken</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kontakt Bereich -->
+        <section class="contact" id="contact">
+            <div class="container">
+                <h2 class="section-title">Kontaktieren Sie <span>uns</span></h2>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group fade-in">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group fade-in">
+                            <label for="email">E-Mail</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group fade-in">
+                            <label for="message">Nachricht</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Nachricht senden</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section fade-in">
+                        <h3>RSCAutomobile</h3>
+                        <p>Die beste Auto-Website weltweit. Wir bieten Premium-Fahrzeuge mit innovativer Technologie und herausragendem Design.</p>
+                    </div>
+                    <div class="footer-section fade-in">
+                        <h3>Kontakt</h3>
+                        <p>Musterstraße 123<br>12345 Musterstadt<br>Deutschland</p>
+                        <p>Tel: +49 123 456789<br>Email: info@rscautomobile.de</p>
+                    </div>
+                    <div class="footer-section fade-in">
+                        <h3>Links</h3>
+                        <p><a href="#home">Startseite</a></p>
+                        <p><a href="#models">Modelle</a></p>
+                        <p><a href="#service">Service</a></p>
+                        <p><a href="#about">Über uns</a></p>
+                        <p><a href="#contact">Kontakt</a></p>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2023 RSCAutomobile. Alle Rechte vorbehalten.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
 
     <script>
-        // Smooth Scroll für Navigation
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
+        // Format Auswahl
+        function selectFormat(format) {
+            const selector = document.getElementById('formatSelector');
+            const pcVersion = document.getElementById('pcVersion');
+            const mobileVersion = document.getElementById('mobileVersion');
+            
+            selector.classList.add('hidden');
+            
+            if (format === 'pc') {
+                pcVersion.classList.add('active');
+                initPcScripts();
+            } else {
+                mobileVersion.classList.add('active');
+                initMobileScripts();
+            }
+        }
+        
+        // Mobile Menu Funktion
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.mobile-version .mobile-menu');
+            const overlay = document.querySelector('.mobile-version .menu-overlay');
+            
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+        
+        // PC Scripts
+        function initPcScripts() {
+            // Smooth Scroll für Navigation
+            document.querySelectorAll('.pc-version nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
                 });
             });
-        });
-        
-        // Header Hintergrund bei Scroll ändern
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
-                header.style.boxShadow = '0 5px 15px rgba(255, 255, 255, 0.05)';
-            } else {
-                header.style.backgroundColor = '#000';
-                header.style.boxShadow = 'none';
-            }
-        });
-        
-        // Scroll Animation
-        const fadeElements = document.querySelectorAll('.fade-in');
-        
-        const appearOptions = {
-            threshold: 0.3,
-            rootMargin: "0px 0px -100px 0px"
-        };
-        
-        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('visible');
-                appearOnScroll.unobserve(entry.target);
+            
+            // Header Hintergrund bei Scroll ändern
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.pc-version header');
+                if (header && window.scrollY > 100) {
+                    header.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+                    header.style.boxShadow = '0 5px 15px rgba(255, 255, 255, 0.05)';
+                } else if (header) {
+                    header.style.backgroundColor = '#000';
+                    header.style.boxShadow = 'none';
+                }
             });
-        }, appearOptions);
+        }
         
-        fadeElements.forEach(element => {
-            appearOnScroll.observe(element);
-        });
+        // Mobile Scripts
+        function initMobileScripts() {
+            // Smooth Scroll für Navigation
+            document.querySelectorAll('.mobile-version .mobile-menu a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    toggleMobileMenu();
+                });
+            });
+            
+            // Header Hintergrund bei Scroll ändern
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.mobile-version header');
+                if (header && window.scrollY > 100) {
+                    header.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+                    header.style.boxShadow = '0 5px 15px rgba(255, 255, 255, 0.05)';
+                } else if (header) {
+                    header.style.backgroundColor = '#000';
+                    header.style.boxShadow = 'none';
+                }
+            });
+        }
         
-        // Hintergrund Animation für Hero Section
-        document.addEventListener('mousemove', function(e) {
-            const hero = document.querySelector('.hero');
-            const moveX = (e.pageX * -1 / 50);
-            const moveY = (e.pageY * -1 / 50);
-            hero.style.backgroundPosition = `calc(50% + ${moveX}px) calc(50% + ${moveY}px)`;
-        });
-        
-        // Touch Animation für Mobile
-        document.addEventListener('touchmove', function(e) {
-            const hero = document.querySelector('.hero');
-            if (e.touches.length > 0) {
-                const touch = e.touches[0];
-                const moveX = (touch.pageX * -1 / 50);
-                const moveY = (touch.pageY * -1 / 50);
+        // Gemeinsame Scripts für beide Versionen
+        function initCommonScripts() {
+            // Scroll Animation
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const appearOptions = {
+                threshold: 0.3,
+                rootMargin: "0px 0px -100px 0px"
+            };
+            
+            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                });
+            }, appearOptions);
+            
+            fadeElements.forEach(element => {
+                appearOnScroll.observe(element);
+            });
+            
+            // Hintergrund Animation für Hero Section
+            document.addEventListener('mousemove', function(e) {
+                const hero = document.querySelector('.hero');
+                const moveX = (e.pageX * -1 / 50);
+                const moveY = (e.pageY * -1 / 50);
                 hero.style.backgroundPosition = `calc(50% + ${moveX}px) calc(50% + ${moveY}px)`;
-            }
-        });
+            });
+            
+            // Touch Animation für Mobile
+            document.addEventListener('touchmove', function(e) {
+                const hero = document.querySelector('.hero');
+                if (e.touches.length > 0) {
+                    const touch = e.touches[0];
+                    const moveX = (touch.pageX * -1 / 50);
+                    const moveY = (touch.pageY * -1 / 50);
+                    hero.style.backgroundPosition = `calc(50% + ${moveX}px) calc(50% + ${moveY}px)`;
+                }
+            });
+        }
+        
+        // Initialisiere gemeinsame Scripts
+        initCommonScripts();
     </script>
 </body>
 </html>
